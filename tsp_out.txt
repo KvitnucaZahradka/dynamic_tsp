@@ -1,0 +1,3 @@
+THE SMALLEST TSP DISTANCE IS: 
+26442
+NOTE: the distance was rounded down to the next integer
