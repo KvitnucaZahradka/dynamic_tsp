@@ -8,6 +8,7 @@ import java.util.List;
 
 public class FileSave {
 
+    /* STATIC FIELDS*/
     private static String FILENAME;
 
     /* METHODS */
@@ -18,7 +19,6 @@ public class FileSave {
 
         /* get the new filename with the path */
         FileSave.FILENAME = System.getProperty("user.dir") + "/" + newName + ".temp";
-        // System.out.println("filename is " + FileSave.FILENAME);
 
         /* saving the file */
         try {
@@ -26,8 +26,6 @@ public class FileSave {
             ObjectOutputStream oos = new ObjectOutputStream(fos);
             oos.writeObject(listToSave);
             oos.close();
-
-            // System.out.println(" saving was successful, the saved file: " + newName + ".temp");
         }
         catch (IOException e) {
             e.printStackTrace();
@@ -47,5 +45,4 @@ public class FileSave {
             e.printStackTrace();
         }
     }
-
 }

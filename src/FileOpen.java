@@ -7,9 +7,7 @@ import java.util.List;
  * Created by Pipjak on 28/05/2017.
  */
 public class FileOpen<T> {
-
     static Integer FILENUMBER;
-
 
     /* STATIC METHODS */
     public static boolean isFileIn(int numberOfNodes){

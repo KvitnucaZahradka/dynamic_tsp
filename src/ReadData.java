@@ -10,104 +10,8 @@ import java.util.Set;
  */
 class ReadData implements Reading {
 
-
     @Override
-    public Double[][] readPositions(String nameOfFile, int numberOfCities) throws IOException {
-        Double[][] result;
-        Set<Double[]> cityPositions = new HashSet<>();
-
-        String line;
-        String[] arr;
-
-        /**
-         * in this part we are reading in the data and converting to a matrix with distances
-         */
-        try {
-            File file = new File(nameOfFile);
-            FileReader fileReader = new FileReader(file);
-
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            StringBuffer stringBuffer = new StringBuffer();
-
-            /* skip one line */
-            line = bufferedReader.readLine();
-
-
-            while ((line = bufferedReader.readLine()) != null ) {
-
-                arr = line.split("\\s+");
-
-                /* putting the coordinates to a set */
-                Double[] coordinates = new Double[2];
-
-                coordinates[0] = Double.parseDouble(arr[0]);
-                coordinates[1] = Double.parseDouble(arr[1]);
-
-                cityPositions.add(coordinates);
-            }
-
-            // closing the fileReader:
-            fileReader.close();
-        }
-        catch (IOException e ){
-            e.printStackTrace();
-        }
-
-        result = calculateGraphWeights(cityPositions, numberOfCities);
-
-        return result;
-    }
-
-    public Integer[][] readPositionsInteger(String nameOfFile, int numberOfCities) throws IOException {
-        Double[][] tempResult;
-        Integer[][] result;
-
-        Set<Double[]> cityPositions = new HashSet<>();
-
-        String line;
-        String[] arr;
-
-        /**
-         * in this part we are reading in the data and converting to a matrix with distances
-         */
-        try {
-            File file = new File(nameOfFile);
-            FileReader fileReader = new FileReader(file);
-
-            BufferedReader bufferedReader = new BufferedReader(fileReader);
-            StringBuffer stringBuffer = new StringBuffer();
-
-            /* skip one line */
-            line = bufferedReader.readLine();
-
-
-            while ((line = bufferedReader.readLine()) != null ) {
-
-                arr = line.split("\\s+");
-
-                /* putting the coordinates to a set */
-                Double[] coordinates = new Double[2];
-
-                coordinates[0] = Double.parseDouble(arr[0]);
-                coordinates[1] = Double.parseDouble(arr[1]);
-
-                cityPositions.add(coordinates);
-            }
-
-            // closing the fileReader:
-            fileReader.close();
-        }
-        catch (IOException e ){
-            e.printStackTrace();
-        }
-
-        tempResult = calculateGraphWeights(cityPositions, numberOfCities);
-
-        result = this.turnInteger(tempResult);
-        return result;
-    }
-
-    public Float[][] readPositionsFloat(String nameOfFile, int numberOfCities) throws IOException {
+    public Float[][] readPositions(String nameOfFile, int numberOfCities) throws IOException {
         Double[][] tempResult;
         Float[][] result;
 
@@ -116,8 +20,8 @@ class ReadData implements Reading {
         String line;
         String[] arr;
 
-        /**
-         * in this part we are reading in the data and converting to a matrix with distances
+        /*
+          in this part we are reading in the data and converting to a matrix with distances
          */
         try {
             File file = new File(nameOfFile);
@@ -192,15 +96,11 @@ class ReadData implements Reading {
     * private and static method that calculate distances using metric of your choice
     * */
     private static double calculateDistance(Double[] posA, Double[] posB){
-        double result;
-
-        result = Math.sqrt(Math.pow(posA[0]-posB[0], 2.0) + Math.pow(posA[1]-posB[1], 2.0));
-
-        return result;
+        return Math.sqrt(Math.pow(posA[0]-posB[0], 2.0) + Math.pow(posA[1]-posB[1], 2.0));
     }
 
     /**
-     * private method that calculate the all graph weights
+     * private method that calculates weights in the graph
      */
     private Double[][] calculateGraphWeights(Set<Double[]> cityPositions, int numberCities){
         Double[][] result = new Double[numberCities][numberCities];
@@ -222,23 +122,8 @@ class ReadData implements Reading {
     }
 
     /**
-     * Turn into the integer method:
+     * method that turn double matrix into the float one:
      * */
-    private Integer[][] turnInteger(Double[][] tempResult){
-        Integer[][] result = new Integer[tempResult.length][tempResult[0].length];
-
-        for(int i = 0; i<tempResult.length; i++){
-            for(int j = 0; j<tempResult[0].length; j++){
-                result[i][j] = (int) Math.floor(tempResult[i][j]*Graph.MULTI);
-            }
-        }
-        return result;
-    }
-
-    /**
-     * Turn into the float method:
-     * */
-
     private Float[][] turnFloat(Double[][] tempResult){
         Float[][] result = new Float[tempResult.length][tempResult[0].length];
 
@@ -249,5 +134,4 @@ class ReadData implements Reading {
         }
         return result;
     }
-
 }

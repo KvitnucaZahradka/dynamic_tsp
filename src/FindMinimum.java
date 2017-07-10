@@ -9,18 +9,20 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public class FindMinimum extends NotifyingThread implements Runnable {
 
+    /* GLOBAL FIELDS */
     private GenerateStatistics combi;
     private Float[][] graph;
     private ArrayList<ConcurrentHashMap<Integer,Float>> aMatrix, newAmatrix;
     private Index ind, newIndex;
 
-
+    /* CONSTRUCTOR */
     FindMinimum(GenerateStatistics combi, Float[][] graph, Index ind, Index newIndex,
                 ArrayList<ConcurrentHashMap<Integer,Float>> aMatrix,
                 ArrayList<ConcurrentHashMap<Integer, Float>> newAmatrix){
 
-
-
+        /*
+        Synchronized versions of objects
+         */
         synchronized (this) {
             this.combi = combi;
             this.graph = graph;
@@ -67,7 +69,6 @@ public class FindMinimum extends NotifyingThread implements Runnable {
 
 
     /* PRIVATE METHODS */
-
     private int index(int[] combination, int k){
         int kIndex = (int) Math.pow(2, k - 1) + (k-1)*Graph.MAX;
 
@@ -89,13 +90,11 @@ public class FindMinimum extends NotifyingThread implements Runnable {
      * III.
      * function that calculates the minimum in the last loop of the algorithm
      * */
-
     private float findMinimumFloat(int[] nextCombination, int j){
         int index, aNextCombination;
         float aSjKplusC, bestMinimum = Graph.INFINITY;
 
         for (int i = 0; i <= nextCombination.length; i++){
-
             if(i==0)
                 aNextCombination = 1;
             else

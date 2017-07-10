@@ -12,23 +12,23 @@ import java.util.concurrent.ExecutionException;
 public class Calculations {
 
     /* STATIC FIELDS */
-
     private static String  FILE = "tsp.txt";
 
 
     /* MAIN FUNCTION */
-
     public static void main(String args[]) throws IOException, BrokenBarrierException, InterruptedException, ExecutionException {
         Graph graph = new Graph(Calculations.FILE);
 
-        /* calculations */
         long startTime = System.currentTimeMillis();
+
+        /* calculations */
         int distance = graph.calculateTSPdistance();
+
         long estimatedTime = System.currentTimeMillis() - startTime;
 
         System.out.println("the time elapsed in miliseconds: " + estimatedTime);
-        System.out.println(" the best TSP distance is: " + distance);
-        System.out.println(" note, the distance rounded down to the closest integer ");
+        System.out.println("the best TSP distance is: " + distance);
+        System.out.println("note, the distance rounded down to the closest integer ");
 
         /* saving the answer */
         PrintStream out = new PrintStream(new FileOutputStream("tsp_out.txt"));

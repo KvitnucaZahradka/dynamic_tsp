@@ -4,7 +4,7 @@
 import java.io.File;
 
 
-public class FileDelete {
+class FileDelete {
 
     /* FIELDS */
     private String pathToFile;
@@ -33,12 +33,10 @@ public class FileDelete {
         }
         success = file.delete();
 
-        /*
         if (success) {
             System.out.println(file.getAbsoluteFile() + " Deleted");
         } else {
             System.out.println(file.getAbsoluteFile() + " Deletion failed!!!");
         }
-        */
     }
 }

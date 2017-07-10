@@ -17,5 +17,4 @@ public interface Reading<T> {
      */
     T readNumberOfCities(String nameOfFile) throws IOException;
 
-
 }

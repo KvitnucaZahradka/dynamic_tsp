@@ -4,6 +4,7 @@
 
 public class Index {
 
+    /*PUBLIC FIELDS*/
     public int mod;
 
     public Index(int numberOfElements, int threshold){

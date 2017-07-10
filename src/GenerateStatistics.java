@@ -1,3 +1,5 @@
+import org.jetbrains.annotations.Contract;
+
 import java.util.stream.IntStream;
 
 
@@ -15,7 +17,7 @@ public class GenerateStatistics {
     int lengthOfCombination;
 
     /* CONSTRUCTOR */
-    public GenerateStatistics(int lengthOfCombination, int upperBound, int startIndex){
+    GenerateStatistics(int lengthOfCombination, int upperBound, int startIndex){
         synchronized(this) {
         /* create the initial seed */
             this.initialCombination = IntStream.iterate(startIndex, n -> n + 1).limit(lengthOfCombination).toArray();
@@ -31,7 +33,7 @@ public class GenerateStatistics {
     /**
      * Binomial coefficient n choose k approximation:
      * */
-    public static int binomialApproximation(int n, int k){
+    static int binomialApproximation(int n, int k){
         if(k == 0){
             return 1;
         }
@@ -47,7 +49,7 @@ public class GenerateStatistics {
     /**
      * I. print array of interest
      * */
-    public static void printArray(int[] array){
+    static void printArray(int[] array){
         for (int anArray : array) System.out.print(anArray + " ");
             System.out.println();
     }
@@ -64,7 +66,6 @@ public class GenerateStatistics {
         for(int i: combination){
             result += Math.pow(2.0, (double) i);
         }
-        //return result.intValue();
         return result.intValue();
     }
 
@@ -73,94 +74,37 @@ public class GenerateStatistics {
      * calculates unique index for every subset
      */
     static int index(int[] combination){
-        //GenerateStatistics.printArray(combination);
         int result = 0;
-
-        // NEW SOLUTION
 
         if(combination == null)
             return result;
 
         if(combination.length == 1 && combination[0] == 1) {
-            // System.out.println("INDEX IS: " + 1);
-            // System.out.println("-----");
             return 1;
         }
         else{
             for (int i : combination) {
                 result += Math.pow(2, i - 1);
             }
-            // System.out.println("INDEX IS: " + (result.intValue() + 1));
-            // System.out.println("-----");
             return result + 1;
         }
     }
 
 
-    /*
-    static int index(int[] combination){
-        // GenerateStatistics.printArray(combination);
-        Double result = 0.0;
-
-        // OLD SOLUTION
-
-        if(combination == null)
-            return result.intValue();
-
-        for (int i : combination) {
-            result += Math.pow(2.0, (double) (i - 1));
-        }
-
-        // int[] trialCombi = new int[combination.length - 1];
-
-        // for(int i = 0; i<trialCombi.length; i++){
-         //   trialCombi[i] = combination[i+1];
-        //}
-
-        //if(indexA(trialCombi)!= result.intValue()){
-        //    System.out.println("MISTAKE MISTAKE in the combination ");
-        //    GenerateStatistics.printArray(combination);
-        //}
-
-        return result.intValue();
-    }
-
-    */
-
-    /* NON-STATIC METHODS*/
-
-    /* get next permutation */
-
-    /* NEW version is with 1 */
     synchronized int[] getNextPermutation(){
-
         if(this.counter == 0){
             this.counter++;
-
-            // OLD SOLUTION
-            // int[] ret = new int[this.initialCombination.length + 1];
-            // ret[0] = 1;
-            // System.arraycopy(this.initialCombination,0, ret,1, this.lengthOfCombination);
-
-            // return ret;
             return this.initialCombination;
         }
         else{
             this.nextPermut();
             this.counter++;
-
-            // OLD SOLUTION
-            // int[] ret = new int[this.initialCombination.length + 1];
-            // ret[0] = 1;
-            // System.arraycopy(this.initialCombination,0, ret,1, this.lengthOfCombination);
-
-            // return ret;
             return this.initialCombination;
         }
     }
 
 
-    /* generate permutations dynamically */
+    /** generate permutations dynamically */
     private synchronized void nextPermut(){
 
         /* if last index is smaller than 0, return */
@@ -176,7 +120,7 @@ public class GenerateStatistics {
     }
 
 
-    /* rewire method */
+    /** rewire method */
     private synchronized int rewire(){
 
         int tempIndex = this.rewireIndex();
@@ -195,7 +139,8 @@ public class GenerateStatistics {
     }
 
 
-    /* reiwireIndex method */
+    /** rewireIndex method */
+    @Contract(pure = true)
     private synchronized int rewireIndex(){
         for(int i = this.lengthOfCombination-1; i>=0; i--){
             if(this.initialCombination[i] != this.upperBound - this.lengthOfCombination + i + 1){
@@ -205,7 +150,9 @@ public class GenerateStatistics {
         return -1;
     }
 
-
+    /**
+     * initialize matrix
+     * */
     private static void initial(int[][] matrix){
         for(int i = 0; i<matrix.length; i++){
             for(int j = 0; j<matrix[0].length; j++)
@@ -215,12 +162,15 @@ public class GenerateStatistics {
 
 
     /* MAIN CLASS FOR TESTING */
+    /**
+     * should be ignored, just for private trial usages
+     * */
+    @Deprecated
     public static void main(String[] args) {
 
         for (int k = 1; k <= 3; k++){
             GenerateStatistics gr = new GenerateStatistics(k, 15, 2);
 
-            // sample of 15 combinations
             for (int i = 0; i < 777777777; i++) {
                 int[] comb = gr.getNextPermutation();
 
